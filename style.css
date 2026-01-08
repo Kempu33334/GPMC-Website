@@ -1,0 +1,28 @@
+body {
+    font-family: ui-sans-serif, system-ui, sans-serif,
+               "Apple Color Emoji", "Segoe UI Emoji",
+               "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.colored-text {
+    background-image: linear-gradient(to right, rgb(236, 72, 153), rgb(59, 130, 246))''
+}
+
+.header-style {
+    background-image: linear-gradient(to right bottom, rgb(219, 39, 119), rgb(37, 99, 235), rgb(0, 0, 0));
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    text-align: center;
+    color: white;
+}
+
+.header-style > h1{
+    font-size: 48px;
+    font-weight: 700;
+}
+
+.header-style > p {
+    font-size: 20px;
+}
