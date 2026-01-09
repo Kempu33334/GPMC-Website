@@ -100,6 +100,8 @@ a {
     height: 64px;
     margin-top: 0px;
     position: sticky;
+    top: 0;
+    background: white;
 }
 
 .nav-bar {
@@ -133,4 +135,121 @@ a {
     font-size: 24px;
     font-weight: 700;
     color: rgba(0, 0, 0, 0);
+}
+
+.background-gray {
+    background-color: rgb(243, 244, 246);
+}
+
+.facts-box-container {
+    padding: 64px 100px;
+    background-color: rgb(243, 244, 246);
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+}
+
+.facts-box {
+    padding: 24px;
+    background-color: white;
+    border-radius: 8px;
+    border-width: 0.8px;
+    border-style: solid;
+    transition: all 0.1s;
+}
+
+.facts-box > h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    margin-top: 0px;
+}
+
+.facts-box > h4 {
+    color: rgb(75, 85, 99);
+    font-weight: 400;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.facts-box-red {
+    border-color: rgb(251, 207, 232);
+}
+
+.facts-box-red:hover {
+    border-color: rgb(244, 114, 182);
+}
+
+.facts-box-blue {
+    border-color: rgb(191, 219, 254);
+}
+
+.facts-box-blue:hover {
+    border-color: rgb(96, 165, 250);
+}
+
+.icon-box-red {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+
+    background: linear-gradient(
+        180deg,
+        #ec4899 0%,
+        #db2777 100%
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-bottom: 16px;
+}
+
+.icon-box-red svg {
+    width: 24px;
+    height: 24px;
+}
+
+.icon-box-blue {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+
+    background: linear-gradient(
+        to right bottom,
+        rgb(59, 130, 246),
+        rgb(37, 99, 235)
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-bottom: 16px;
+}
+
+.icon-box-blue svg {
+    width: 24px;
+    height: 24px;
+}
+
+.statistics {
+    text-align: center;
+    padding: 64px 16px;
+}
+
+.design-text {
+    display: inline-block;
+    background-clip: text;
+    background-image: linear-gradient(
+        to right,
+        rgb(236, 72, 153),
+        rgb(59, 130, 246)
+    );
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 36px;
+    font-weight: 700;
 }
