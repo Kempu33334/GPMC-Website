@@ -102,6 +102,7 @@ a {
     position: sticky;
     top: 0;
     background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .nav-bar {
@@ -240,6 +241,15 @@ a {
     padding: 64px 16px;
 }
 
+.statistics-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+    justify-content: center;
+}
+
 .design-text {
     display: inline-block;
     background-clip: text;
@@ -252,4 +262,69 @@ a {
     color: transparent;
     font-size: 36px;
     font-weight: 700;
+    margin-top: 0px;
+    margin-bottom: 48px;
+}
+
+.pink-text {
+    margin-top: 0px;
+    margin-bottom: 12px;
+    font-size: 48px;
+    font-weight: 700;
+    color: rgb(236, 72, 153);
+}
+
+.blue-text {
+    margin-top: 0px;
+    margin-bottom: 12px;
+    font-size: 48px;
+    font-weight: 700;
+    color: rgb(59, 130, 246);
+}
+
+.black-text {
+    margin-top: 0px;
+    margin-bottom: 8px;
+    font-size: 20px;
+    font-weight: 400;
+    color: rgb(17, 24, 39);
+}
+
+.gray-text {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgb(75, 85, 99);
+}
+
+.ready-to-challenge {
+    padding: 64px 16px;
+    text-align: center;
+}
+
+.ready-to-challenge > h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: rgb(17, 24, 39);
+    margin-top: 0px;
+    margin-bottom: 24px;
+}
+
+.ready-to-challenge > h2 {
+    font-size: 20px;
+    font-weight: 400;
+    color: rgb(75, 85, 99);
+    margin-top: 0px;
+    margin-bottom: 32px;
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    padding-left: 16px;
+    padding-right: 16px;
+    color: rgb(156, 163, 175);
+    background-color: black;
 }
