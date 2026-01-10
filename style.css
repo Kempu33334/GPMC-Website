@@ -197,6 +197,7 @@ a {
     border-width: 0.8px;
     border-style: solid;
     transition: all 0.1s;
+    line-height: 24px;
 }
 
 .facts-box > h3 {
@@ -421,4 +422,98 @@ a {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 32px;
+}
+
+.what-we-offer {
+    max-width: 896px;
+    background-image: linear-gradient(to right bottom, rgb(219, 234, 254), rgb(243, 244, 246));
+    border-color: rgb(191, 219, 254);
+    border-width: 0.8px;
+    border-style: solid;
+    margin-top: 48px;
+    border-radius: 8px;
+    padding-top: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-bottom: 16px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 48px;
+    transition: all 0.1s;
+}
+
+.what-we-offer > h1 {
+    color: black;
+    font-size: 30px;
+    font-weight: 700;
+    margin-top: 0px;
+    margin-bottom: 24px;
+}
+
+.what-we-offer > ul > li > h3 {
+    color: rgb(17, 24, 39);
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.what-we-offer > ul > li > h4 {
+    color: rgb(75, 85, 99);
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 0px;
+    margin-bottom: 8px;
+    line-height: 24px;
+}
+
+.red-bullet::marker {
+    color: rgb(236, 72, 153);
+}
+
+.blue-bullet::marker {
+    color: rgb(59, 130, 246);
+}
+
+.our-team {
+    max-width: 896px;
+    background-color: white;
+    border-color: rgb(251, 207, 232);
+    border-width: 0.8px;
+    border-style: solid;
+    margin-bottom: 48px;
+    border-radius: 8px;
+    padding: 32px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0px;
+    transition: all 0.1s;
+}
+
+.our-team > h1 {
+    color: black;
+    font-size: 30px;
+    font-weight: 700;
+    margin-top: 0px;
+    margin-bottom: 8px;
+}
+
+.our-team > h3 {
+    color: rgb(75, 85, 99);
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 16px;
+    margin-bottom: 0px;
+    line-height: 28px;
+}
+
+.our-team > a {
+    color: rgb(236, 72, 153);
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.our-team:hover {
+    border-color: rgb(244, 114, 182);
 }
