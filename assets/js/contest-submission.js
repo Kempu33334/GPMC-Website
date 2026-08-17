@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!contest) {
             previewTitle.textContent = 'Contest Preview';
-            previewDetails.innerHTML = '<p class="preview-note">Choose a contest to see its details and the question fields.</p>';
+            previewDetails.innerHTML = '<p class="preview-note">Choose an active contest to see its details and the question fields.</p>';
             pdfFrame.src = '';
             pdfLink.textContent = 'PDF link will appear here';
             pdfLink.href = '#';
@@ -136,6 +136,8 @@ document.addEventListener('DOMContentLoaded', function () {
             contestMeta.innerHTML = '';
             timerRow.classList.add('hidden');
             contestFormFields.classList.add('hidden');
+            startButton.disabled = true;
+            startButton.classList.remove('hidden');
             return;
         }
 
@@ -165,7 +167,8 @@ document.addEventListener('DOMContentLoaded', function () {
             questionList.innerHTML = '';
             contestFormFields.classList.add('hidden');
             timerRow.classList.add('hidden');
-            startButton.disabled = false;
+            const canStartContest = Boolean(contest.active);
+            startButton.disabled = !canStartContest;
             startButton.classList.remove('hidden');
             contestSelect.disabled = false;
         } else {
@@ -181,12 +184,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function populateContestSelect(items) {
-        contestSelect.innerHTML = items
-            .map((contest) => `<option value="${contest.id}">${contest.name}</option>`)
-            .join('');
+        const activeItems = items.filter((contest) => contest.active);
+        contestSelect.innerHTML = activeItems.length > 0
+            ? activeItems
+                .map((contest) => `<option value="${contest.id}">${contest.name}</option>`)
+                .join('')
+            : '<option value="">No active contests available</option>';
 
-        if (items.length > 0) {
-            renderContest(items[0]);
+        if (activeItems.length > 0) {
+            renderContest(activeItems[0]);
+        } else {
+            renderContest(null);
         }
     }
 
@@ -228,6 +236,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     async function submitToGoogleSheet() {
+        if (!selectedContest || !selectedContest.active) {
+            submitStatus.textContent = 'Only active contests can be submitted.';
+            submitStatus.style.color = 'rgb(220, 38, 38)';
+            submitButton.disabled = true;
+            return;
+        }
+
         submitButton.disabled = true;
         submitStatus.textContent = 'Submitting...';
         submitStatus.style.color = 'rgb(55, 65, 81)';
@@ -312,7 +327,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (!selectedContest) {
-            alert('Please choose a contest first.');
+            alert('Please choose an active contest first.');
+            return;
+        }
+
+        if (!selectedContest.active) {
+            alert('That contest is not active right now. Please choose an active contest.');
             return;
         }
 
@@ -330,7 +350,8 @@ document.addEventListener('DOMContentLoaded', function () {
     confirmStartButton.addEventListener('click', function () {
         closeModal(modalOverlay);
 
-        if (!selectedContest) {
+        if (!selectedContest || !selectedContest.active) {
+            alert('Only active contests can be started.');
             return;
         }
 
@@ -387,8 +408,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     contestSelect.addEventListener('change', function () {
-        const selected = contests.find((contest) => contest.id === this.value);
-        renderContest(selected);
+        const selected = contests.find((contest) => contest.id === this.value && contest.active);
+        renderContest(selected || null);
     });
 
     submitButton.addEventListener('click', submitToGoogleSheet);
