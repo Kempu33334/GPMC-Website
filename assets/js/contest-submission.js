@@ -13,21 +13,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const startButton = document.getElementById('startButton');
     const contestFormFields = document.getElementById('contestFormFields');
     const timerRow = document.getElementById('timerRow');
-    const googleSheetEndpoint = 'https://script.google.com/macros/s/AKfycbykrguaz-XCrWKSPXJwQqycCJXdpOsnR8nCsGawvlSnHuUBbUd-DCYh8awG5w9AtpXLVw/exec';
+    const googleSheetEndpoint = 'https://script.google.com/macros/s/AKfycbxgG9PCYA_1PgKmnVBQuOG_pckFJGX75SRzMN9xS9_nNbtcvYBwYkaHyLDC6ugz-H6W-g/exec';
     const timerValue = document.getElementById('timerValue');
     const modalOverlay = document.getElementById('startModalOverlay');
     const modalTimeLimit = document.getElementById('modalTimeLimit');
     const confirmStartButton = document.getElementById('confirmStartButton');
     const cancelStartButton = document.getElementById('cancelStartButton');
-    const dqModalOverlay = document.getElementById('dqModalOverlay');
 
     let contests = [];
     let selectedContest = null;
     let timerInterval = null;
     let remainingSeconds = 0;
     let started = false;
-    let dqed = false;
     let startTimestamp = null;
+    let totalOutOfTabMs = 0;
+    let hiddenSince = null;
 
     function parseTimeLimit(limit) {
         if (typeof limit === 'number' && !Number.isNaN(limit)) {
@@ -65,14 +65,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function showDQModal() {
-        dqed = true;
-        stopTimer();
-        contestFormFields.classList.add('hidden');
-        submitButton.disabled = true;
-        submitButton.classList.add('hidden');
-        openModal(dqModalOverlay);
-        startButton.disabled = true;
+    function getOutOfTabSeconds() {
+        const currentHiddenMs = hiddenSince ? Date.now() - hiddenSince : 0;
+        return Math.floor((totalOutOfTabMs + currentHiddenMs) / 1000);
     }
 
     function formatContestMeta(contest) {
@@ -222,13 +217,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }));
         const now = Date.now();
         const timeTakenSeconds = startTimestamp ? Math.floor((now - startTimestamp) / 1000) : 0;
+        const timeAwaySeconds = getOutOfTabSeconds();
 
         return {
             contestId: selectedContest?.id || '',
             contestName: selectedContest?.name || '',
             username,
-            dqed,
             timeTakenSeconds,
+            timeAwaySeconds,
             timeLimitMinutes: selectedContest?.timeLimit || 0,
             answers: JSON.stringify(answers),
             submittedAt: new Date(now).toISOString(),
@@ -316,16 +312,22 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function handleVisibilityChange() {
-        if (started && !dqed && document.visibilityState !== 'visible') {
-            showDQModal();
+        if (!started) {
+            return;
+        }
+
+        if (document.visibilityState === 'hidden' && !hiddenSince) {
+            hiddenSince = Date.now();
+            return;
+        }
+
+        if (document.visibilityState === 'visible' && hiddenSince) {
+            totalOutOfTabMs += Date.now() - hiddenSince;
+            hiddenSince = null;
         }
     }
 
     startButton.addEventListener('click', function () {
-        if (dqed) {
-            return;
-        }
-
         if (!selectedContest) {
             alert('Please choose an active contest first.');
             return;
@@ -357,6 +359,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         started = true;
         startTimestamp = Date.now();
+        totalOutOfTabMs = 0;
+        hiddenSince = null;
         remainingSeconds = parseTimeLimit(selectedContest.timeLimit);
 
         if (remainingSeconds <= 0) {
